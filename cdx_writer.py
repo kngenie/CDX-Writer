@@ -608,7 +608,9 @@ class CDX_Writer(object):
                 headers, content = self.crlf_pattern.split(record.content[1], 1)
             except ValueError:
                 headers = record.content[1]
-                content = None
+                # record.content[1] ends with just one '\n' if end of header
+                # is '\n\n' and HTTP entity is empty (warctools bug?)
+                content = ''
             headers = headers.splitlines()
         elif  self.screenshot_mode and 'metadata' == record.type:
             headers = None
@@ -686,7 +688,12 @@ class CDX_Writer(object):
                         raise ParseError('Unknown field: ' + field)
 
                     endpoint = self.field_map[field].replace(' ', '_')
-                    response = getattr(self, 'get_' + endpoint)(record)
+                    try:
+                        response = getattr(self, 'get_' + endpoint)(record)
+                    except Exception as ex:
+                        raise ParseError('error reading field {!r}({!r}) '
+                                         'in record at {} ({})'.format(
+                                field, endpoint, offset, ex))
                     #print self.offset
                     #print record.compressed_record_size
                     #print record.content_length
