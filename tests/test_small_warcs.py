@@ -37,17 +37,20 @@ warcs = {'alexa_short_header.arc.gz':      'net,killerjo)/robots.txt 20110804181
          'empty_record_ending_with_lflf.arc.gz':'1,120,179,210)/test 20030801004548 http://210.179.120.1/test unk 200 3I42H3S6NNFQ2MSVX7XZKYAYSCX5QBYJ - - 222 0 empty_record_ending_with_lflf.arc.gz'
         }
 
+warc_dir = os.path.join(os.path.dirname(__file__), 'small_warcs')
+
 for file, cdx in warcs.iteritems():
 
-    warc_file = quote(file)
+    warc_file = os.path.join(warc_dir, file)
     assert os.path.exists(warc_file)
 
     print "processing", warc_file
 
-    cmd = '../cdx_writer.py --all-records %s' % warc_file
+    cmd = 'cd {wd}; ../../cdx_writer.py --all-records {file}'.format(
+        wd=quote(warc_dir), file=quote(file))
     print "  running", cmd
     status, output = commands.getstatusoutput(cmd)
-    assert 0 == status
+    assert 0 == status, 'cdx_writer failed with status {}'.format(status)
 
 
     assert output.endswith(cdx), """\n  expected: %s\n       got: %s\n""" % (cdx, '\n'.join(output.split('\n')[1:]))

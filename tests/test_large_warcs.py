@@ -4,7 +4,7 @@ import os
 import commands
 from pipes import quote
 
-warc_dir = os.path.join(os.path.dirname(__file__), 'warcs')
+warc_dir = os.path.join(os.path.dirname(__file__), 'large_warcs')
 
 warcs = {
     'YTV-20120204025848-crawl442/YTV-20120204035110-15431.warc.gz':

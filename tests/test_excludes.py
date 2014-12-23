@@ -5,6 +5,7 @@ import json
 import os
 import subprocess
 
+warc_dir = os.path.join(os.path.dirname(__file__), 'small_warcs')
 
 tests = [
     {
@@ -44,7 +45,7 @@ for test in tests:
     exclude_list = 'tmp_excludes.txt'
     stats_file   = 'tmp_stats.json'
 
-    assert os.path.exists(test_file)
+    assert os.path.exists(os.path.join(warc_dir, test_file))
     assert not os.path.exists(exclude_list)
     assert not os.path.exists(stats_file)
 
@@ -54,9 +55,11 @@ for test in tests:
     f.write(test['exclude'] + '\n')
     f.close()
 
-    cmd = ['../cdx_writer.py', '--all-records', '--exclude-list='+exclude_list, '--stats-file='+stats_file, test_file]
+    cmd = ['../../cdx_writer.py', '--all-records',
+           '--exclude-list='+os.path.join('..', exclude_list),
+           '--stats-file='+os.path.join('..', stats_file), test_file]
 
-    output = subprocess.check_output(cmd)
+    output = subprocess.check_output(cmd, cwd=warc_dir)
     #assert output.strip().endswith(test['result']), """\n  expected: %s\n       got: %s\n""" % (test['result'], '\n'.join(output.split('\n')[1:]))
     assert output == test['result'], """\n  expected: %s\n       got: %s\n""" % (test['result'], output)
 
