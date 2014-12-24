@@ -9,6 +9,7 @@ before_script:
   - wget https://bitbucket.org/rajbot/warc-tools/get/59beb6183623.zip
   - unzip 59beb6183623.zip
   - ln -s rajbot-warc-tools-59beb6183623/hanzo/warctools .
+  - cd tests
 script:
-  - PYTHONPATH=. ./test_small_warcs.py
-  - PYTHONPATH=. ./test_excludes.py
+  - ./test_small_warcs.py
+  - ./test_excludes.py
