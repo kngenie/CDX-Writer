@@ -6,7 +6,6 @@ install:
   - pip install tldextract==1.0 --use-mirrors
   - pip install chardet --use-mirrors
 before_script:
-  - cd tests
   - wget https://bitbucket.org/rajbot/warc-tools/get/59beb6183623.zip
   - unzip 59beb6183623.zip
   - ln -s rajbot-warc-tools-59beb6183623/hanzo/warctools .
