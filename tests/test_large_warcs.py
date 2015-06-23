@@ -14,7 +14,7 @@ warcs = {
     'live-20120312105341306-00165-20120312171822397/live-20120312161414739-00234.arc.gz':
         'a23c3ed3fb459cb53089613419eadce5',
     'wb_urls.ia11013.20050517055850-c/wb_urls.ia11013.20050805040525.arc.gz':
-        'b4dabcdfc4d2ba3c4ee94d90352176e5', #missing filedesc:// header
+        '2a88c10ed48d35a09126895324c60141', #missing filedesc:// header
     }
 
 if __name__ == '__main__':
